@@ -15,24 +15,9 @@ void push(stack_t **stack, unsigned int line_number)
 		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
-	stack_t *new_node = malloc(sizeof(stack_t));
-
-	if (new_node == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	new_node->n = atoi(arg);
-	new_node->prev = NULL;
-	new_node->next = NULL;
-
-	if (*stack != NULL)
-	{
-		(*stack)->prev = new_node;
-		new_node->next = *stack;
-	}
-	*stack = new_node;
+	insert_node_at_index(stack, 0, atoi(argv[1]));
 }
+
 /**
  * pall - Prints all the elements in the stack.
  * @stack: Pointer to the top of the stack.
@@ -40,11 +25,9 @@ void push(stack_t **stack, unsigned int line_number)
  */
 void pall(stack_t **stack, unsigned int line_number)
 {
-	stack_t *current = *stack;
+	stack = stack;
+	line_number = line_number;
 
-	while (current != NULL)
-	{
-		printf("%d\n", current->n);
-		current = current->next;
-	}
+	print_stack(*stack);
+
 }

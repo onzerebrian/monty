@@ -7,11 +7,12 @@
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	char *arg = strtok(NULL, " \t\n");
 
-	if (arg == NULL || !is_number(arg))
+	if (argv[1] == NULL || is_number(argv[1]) == 0)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		free_entire_arr(argv);
+		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
 	stack_t *new_node = malloc(sizeof(stack_t));

@@ -40,6 +40,16 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+char **mkargv(char *str);
+void exec_instruction(char *s, stack_t **stack, unsigned int line_number);
+void *free_array(char **arr, int j);
+void free_entire_arr(char **arr);
+
+stack_t *insert_node_at_index(stack_t **h, unsigned int idx, int n);
+size_t print_stack(stack_t *h);
+void free_stack(stack_t *head);
+int delete_node_at_index(stack_t **head, unsigned int index);
+
 /* Function prototypes */
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);

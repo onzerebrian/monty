@@ -1,13 +1,11 @@
 #include "monty.h"
 
 /**
- * main - start of the execution cycle
- * @argc: argument count
- * argv: argument vector
- * Return: returns 0 on success
+ * main - Entry point
+ * @argc: Argument count
+ * @argv: Argument vector
+ * Return: 0 on success
  */
-char **argv = NULL;
-
 int main(int argc, char *argv[])
 {
 	FILE *file;
@@ -22,40 +20,33 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
+
 	file = fopen(argv[1], "r");
 	if (file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
+
 	while ((read = getline(&line, &len, file)) != -1)
 	{
 		line_number++;
 		line[strcspn(line, "\n")] = '\0';
-
 		if (strlen(line) == 0 || line[0] == '#')
 			continue;
+		/* Tokenize the line to separate opcode and arguments */
 		char *opcode = strtok(line, " \t\n");
-		char *argv = strtok(NULL, " \t\n");
+		char *arg = strtok(NULL, " \t\n");
 
-		for (i = 0; instructions[i].opcode != NULL; i++)
-		{
-			if (strcmp(opcode, instructions[i].opcode) == 0)
-			{
-				/* Execute the opcode function */
-				instructions[i].f(&stack, line_number);
-				break;
-			}
-		}
-		if (instructions[i].opcode == NULL)
-		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-			exit(EXIT_FAILURE);
-		}
-	}
+		exec_instruction(opcode, &stack, line_number);
+		/* Free the argument tokens */
+		free(opcode);
+		free(arg);
 	}
 	free(line);
 	free_stack(stack);
 	fclose(file);
+
 	return (0);
 }
+

@@ -1,5 +1,16 @@
 #ifndef MONTY_H
 #define MONTY_H
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <ctype.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -61,5 +72,6 @@ void err(stack_t **stack, unsigned int line_number);
 void __add(stack_t **stack, unsigned int line_number);
 void (*funct(char *token))(stack_t **stack, unsigned int line_number);
 void __nop(stack_t **stack, unsigned int line_number);
+int ll(char *line);
 
 #endif

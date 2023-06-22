@@ -1,14 +1,5 @@
 #ifndef MONTY_H
 #define MONTY_H
-
-#include <stdlib.h>
-#include <stddef.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-
-extern char **argv;
-
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -24,8 +15,6 @@ typedef struct stack_s
 	struct stack_s *prev;
 	struct stack_s *next;
 } stack_t;
-
-
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -39,30 +28,38 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-
-char **mkargv(char *str);
-void exec_instruction(char *s, stack_t **stack, unsigned int line_number);
-void *free_array(char **arr, int j);
-void free_entire_arr(char **arr);
-
-stack_t *insert_node_at_index(stack_t **h, unsigned int idx, int n);
-size_t print_stack(stack_t *h);
-void free_stack(stack_t *head);
-int delete_node_at_index(stack_t **head, unsigned int index);
-
-/* Function prototypes */
-void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
-void pint(stack_t **stack, unsigned int line_number);
-void pop(stack_t **stack, unsigned int line_number);
-void swap(stack_t **stack, unsigned int line_number);
-void add(stack_t **stack, unsigned int line_number);
-void nop(stack_t **stack, unsigned int line_number);
-void sub(stack_t **stack, unsigned int line_number);
-void _div(stack_t **stack, unsigned int line_number);
-
-
-
-
+/**
+ * struct global_s - global variables
+ * @token: operand
+ * @num: value to store in stack
+ * @code: instruction
+ * @file: pointer to monty file descriptor
+ * @content: line content
+ * @flag: change stack <-> queue
+ * Description: carries values through the program
+ */
+typedef struct global_s
+{
+	char *code;
+	char *token;
+	FILE *file;
+	char *content;
+	int flag;
+	int num;
+}  global_t;
+extern global_t global;
+int check_int(char *num);
+void s_v(stack_t **stack, unsigned int line_number);
+void f_st(stack_t **stack);
+char nl(char *line);
+void __push(stack_t **stack, unsigned int line_number);
+void __pall(stack_t **stack, unsigned int line_number);
+void __pint(stack_t **stack, unsigned int line_number);
+void __pop(stack_t **stack, unsigned int line_number);
+void __swap(stack_t **stack, unsigned int line_number);
+void err(stack_t **stack, unsigned int line_number);
+void __add(stack_t **stack, unsigned int line_number);
+void (*funct(char *token))(stack_t **stack, unsigned int line_number);
+void __nop(stack_t **stack, unsigned int line_number);
 
 #endif
